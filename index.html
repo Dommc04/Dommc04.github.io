@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dominic McElroy — Software Engineer & Security Specialist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #080c10;
+    --bg2: #0d1117;
+    --bg3: #111820;
+    --surface: #161d27;
+    --surface2: #1c2534;
+    --accent: #00e5a0;
+    --accent2: #0af;
+    --accent3: #ff4d6d;
+    --text: #e8edf3;
+    --muted: #6b7d90;
+    --border: rgba(0, 229, 160, 0.12);
+    --border2: rgba(255,255,255,0.06);
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+    --display: 'Bebas Neue', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* GRID BACKGROUND */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,160,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,160,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* SCANLINE */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.03) 2px,
+      rgba(0,0,0,0.03) 4px
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 48px;
+    background: rgba(8, 12, 16, 0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border2);
+  }
+
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  .nav-cta {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent) !important;
+    border: 1px solid var(--accent);
+    padding: 8px 18px;
+    border-radius: 2px;
+    transition: background 0.2s, color 0.2s !important;
+  }
+
+  .nav-cta:hover {
+    background: var(--accent) !important;
+    color: var(--bg) !important;
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 120px 48px 80px;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(0,229,160,0.08) 0%, transparent 70%);
+    top: 50%;
+    right: -100px;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  .hero-content { max-width: 760px; }
+
+  .hero-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .hero h1 {
+    font-family: var(--display);
+    font-size: clamp(72px, 10vw, 128px);
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .hero h1 span {
+    display: block;
+    color: var(--accent);
+    -webkit-text-stroke: 1px var(--accent);
+  }
+
+  .hero-sub {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--muted);
+    margin: 32px 0 16px;
+    letter-spacing: 0.04em;
+  }
+
+  .hero-desc {
+    font-size: 17px;
+    color: rgba(232,237,243,0.7);
+    max-width: 560px;
+    font-weight: 300;
+    line-height: 1.8;
+    margin-bottom: 48px;
+  }
+
+  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--accent);
+    color: var(--bg);
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 14px 28px;
+    border-radius: 2px;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 14px 28px;
+    border-radius: 2px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-stats {
+    display: flex;
+    gap: 48px;
+    margin-top: 64px;
+    padding-top: 40px;
+    border-top: 1px solid var(--border2);
+  }
+
+  .stat-num {
+    font-family: var(--display);
+    font-size: 42px;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 4px;
+  }
+
+  /* SECTIONS */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 100px 48px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .section-title {
+    font-family: var(--display);
+    font-size: clamp(40px, 6vw, 72px);
+    color: var(--text);
+    line-height: 1;
+    letter-spacing: 0.02em;
+    margin-bottom: 60px;
+  }
+
+  /* SKILLS GRID */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2px;
+    background: var(--border2);
+    border: 1px solid var(--border2);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .skill-cell {
+    background: var(--bg2);
+    padding: 28px 32px;
+    transition: background 0.2s;
+  }
+
+  .skill-cell:hover { background: var(--surface); }
+
+  .skill-category {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .skill-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    padding: 4px 10px;
+    border-radius: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .skill-tag:hover { color: var(--accent); border-color: var(--border); }
+
+  /* EXPERIENCE */
+  .timeline { display: flex; flex-direction: column; gap: 2px; }
+
+  .exp-card {
+    background: var(--bg2);
+    border: 1px solid var(--border2);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 4px 4px 0;
+    padding: 32px 36px;
+    transition: background 0.2s, border-left-color 0.2s;
+    cursor: default;
+  }
+
+  .exp-card:hover { background: var(--surface); border-left-color: var(--accent); }
+
+  .exp-card:nth-child(2) { border-left-color: var(--accent2); }
+  .exp-card:nth-child(3) { border-left-color: var(--muted); }
+  .exp-card:nth-child(4) { border-left-color: var(--accent3); }
+
+  .exp-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+
+  .exp-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .exp-date {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+
+  .exp-org {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    margin-bottom: 20px;
+    letter-spacing: 0.04em;
+  }
+
+  .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+  .exp-bullets li {
+    font-size: 14px;
+    color: rgba(232,237,243,0.65);
+    padding-left: 20px;
+    position: relative;
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  .exp-bullets li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-family: var(--mono);
+  }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 16px;
+  }
+
+  .project-card {
+    background: var(--bg2);
+    border: 1px solid var(--border2);
+    border-radius: 4px;
+    padding: 28px;
+    transition: border-color 0.2s, transform 0.2s;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    cursor: pointer;
+  }
+
+  .project-card:hover {
+    border-color: rgba(0,229,160,0.3);
+    transform: translateY(-2px);
+  }
+
+  .project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .project-icon {
+    width: 36px;
+    height: 36px;
+    background: rgba(0,229,160,0.08);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .project-icon svg { width: 16px; height: 16px; }
+
+  .project-link-icon { color: var(--muted); transition: color 0.2s; font-size: 16px; }
+  .project-card:hover .project-link-icon { color: var(--accent); }
+
+  .project-name {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .project-desc {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 300;
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .project-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .project-lang {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .lang-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: inline-block;
+  }
+
+  .lang-dot.cpp { background: #f34b7d; }
+  .lang-dot.py { background: #3572A5; }
+  .lang-dot.sh { background: #89e051; }
+  .lang-dot.multi { background: var(--accent2); }
+
+  /* CERTS */
+  .certs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+  }
+
+  .cert-card {
+    background: var(--bg2);
+    border: 1px solid var(--border2);
+    border-radius: 4px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: border-color 0.2s;
+  }
+
+  .cert-card:hover { border-color: rgba(0,229,160,0.2); }
+
+  .cert-icon {
+    width: 32px;
+    height: 32px;
+    background: rgba(0,229,160,0.08);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .cert-name {
+    font-size: 13px;
+    color: var(--text);
+    font-weight: 400;
+  }
+
+  .cert-status {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .cert-status.active { color: var(--accent); }
+  .cert-status.progress { color: #ffb86c; }
+  .cert-status.attempted { color: var(--accent3); }
+
+  /* AWARDS */
+  .awards-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .award-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--bg2);
+    border: 1px solid var(--border2);
+    border-radius: 2px;
+    padding: 12px 20px;
+    font-size: 13px;
+    color: var(--text);
+    transition: border-color 0.2s;
+  }
+
+  .award-pill:hover { border-color: rgba(0,229,160,0.2); }
+
+  .award-pill-badge {
+    width: 24px;
+    height: 24px;
+    background: rgba(0,229,160,0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+  }
+
+  /* CONTACT */
+  .contact-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  .contact-info { display: flex; flex-direction: column; gap: 20px; }
+
+  .contact-line {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border2);
+  }
+
+  .contact-line:hover { color: var(--accent); }
+
+  .contact-line-label {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(107,125,144,0.5);
+    min-width: 48px;
+  }
+
+  .contact-big {
+    font-family: var(--display);
+    font-size: clamp(32px, 5vw, 60px);
+    color: var(--text);
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+    margin-bottom: 8px;
+  }
+
+  .contact-big span { color: var(--accent); }
+
+  /* FOOTER */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border2);
+    padding: 24px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 100%;
+  }
+
+  .footer-copy {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .footer-links { display: flex; gap: 24px; }
+
+  .footer-links a {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+    letter-spacing: 0.06em;
+  }
+
+  .footer-links a:hover { color: var(--accent); }
+
+  /* DIVIDER */
+  .full-divider {
+    position: relative;
+    z-index: 1;
+    height: 1px;
+    background: var(--border2);
+    width: 100%;
+  }
+
+  /* ANIMATE IN */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-tag { animation: fadeUp 0.6s ease both; }
+  .hero h1 { animation: fadeUp 0.6s 0.1s ease both; }
+  .hero-sub { animation: fadeUp 0.6s 0.2s ease both; }
+  .hero-desc { animation: fadeUp 0.6s 0.3s ease both; }
+  .hero-actions { animation: fadeUp 0.6s 0.4s ease both; }
+  .hero-stats { animation: fadeUp 0.6s 0.5s ease both; }
+
+  /* TERMINAL BLINK */
+  .blink {
+    display: inline-block;
+    width: 3px;
+    height: 1em;
+    background: var(--accent);
+    vertical-align: middle;
+    margin-left: 4px;
+    animation: blink 1s step-end infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    section, .hero { padding-left: 24px; padding-right: 24px; }
+    .contact-wrap { grid-template-columns: 1fr; }
+    .hero-stats { gap: 28px; }
+    footer { flex-direction: column; gap: 16px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">// Dominic McElroy</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Software Engineer · Cybersecurity Specialist</div>
+    <h1>
+      Dominic
+      <span>McElroy</span>
+    </h1>
+    <div class="hero-sub">// Full Stack Dev · Red Team · Secure Systems<span class="blink"></span></div>
+    <p class="hero-desc">
+      CS candidate (May 2026) with 8+ years of hands-on IT experience. I build secure backend systems, break things ethically, and engineer solutions at the intersection of software and security.
+    </p>
+    <div class="hero-actions">
+      <a href="mailto:Dom.mcelro@gmail.com" class="btn-primary">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+        Get in Touch
+      </a>
+      <a href="https://github.com/Dommc04" target="_blank" class="btn-outline">
+        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+        GitHub
+      </a>
+      <a href="https://linkedin.com/in/dominic-mcelroy-6473a6197" target="_blank" class="btn-outline">
+        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">8+</div>
+        <div class="stat-label">Years IT Experience</div>
+      </div>
+      <div>
+        <div class="stat-num">500+</div>
+        <div class="stat-label">Hours Applied Support</div>
+      </div>
+      <div>
+        <div class="stat-num">50+</div>
+        <div class="stat-label">Systems Pen-Tested</div>
+      </div>
+      <div>
+        <div class="stat-num">Top 20%</div>
+        <div class="stat-label">DoD Cyber Sentinel</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="full-divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">Technical Expertise</div>
+  <div class="section-title">Skills</div>
+  <div class="skills-grid">
+    <div class="skill-cell">
+      <div class="skill-category">Languages</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">C++</span>
+        <span class="skill-tag">C</span>
+        <span class="skill-tag">JavaScript</span>
+        <span class="skill-tag">Node.js</span>
+        <span class="skill-tag">Golang</span>
+        <span class="skill-tag">PowerShell</span>
+        <span class="skill-tag">x86 Assembly</span>
+        <span class="skill-tag">HTML/CSS</span>
+      </div>
+    </div>
+    <div class="skill-cell">
+      <div class="skill-category">Security</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Penetration Testing</span>
+        <span class="skill-tag">Red Team Ops</span>
+        <span class="skill-tag">Vuln Assessment</span>
+        <span class="skill-tag">Incident Response</span>
+        <span class="skill-tag">Endpoint Security</span>
+        <span class="skill-tag">Cryptography</span>
+        <span class="skill-tag">IAM</span>
+      </div>
+    </div>
+    <div class="skill-cell">
+      <div class="skill-category">Development</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Full Stack Dev</span>
+        <span class="skill-tag">REST API Design</span>
+        <span class="skill-tag">Software Engineering</span>
+        <span class="skill-tag">AI Integration</span>
+        <span class="skill-tag">Algorithm Design</span>
+      </div>
+    </div>
+    <div class="skill-cell">
+      <div class="skill-category">Systems & Tools</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Active Directory</span>
+        <span class="skill-tag">DNS / GPO</span>
+        <span class="skill-tag">Failover Clustering</span>
+        <span class="skill-tag">HackTheBox</span>
+        <span class="skill-tag">TryHackMe</span>
+        <span class="skill-tag">JumpCloud</span>
+        <span class="skill-tag">QEMU/AArch64</span>
+        <span class="skill-tag">Windows Server</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">Work History</div>
+  <div class="section-title">Experience</div>
+  <div class="timeline">
+    <div class="exp-card">
+      <div class="exp-meta">
+        <div class="exp-title">Full Stack Developer — Backend Focus</div>
+        <div class="exp-date">2024 – 2025</div>
+      </div>
+      <div class="exp-org">Confidential Employer (Fortune-level enterprise)</div>
+      <ul class="exp-bullets">
+        <li>Engineered RESTful backend services for an internal generative AI platform, reducing manual workflow time by an estimated 30% through AI-driven process automation.</li>
+        <li>Architected scalable API integrations for AI-driven enterprise workflows achieving sub-200ms average response times and meeting all production SLAs.</li>
+        <li>Delivered 10+ secure, compliant backend features on schedule in collaboration with product and infrastructure teams.</li>
+      </ul>
+    </div>
+    <div class="exp-card">
+      <div class="exp-meta">
+        <div class="exp-title">Information Systems Technology Specialist</div>
+        <div class="exp-date">Jan 2018 – Dec 2022</div>
+      </div>
+      <div class="exp-org">Work-Based Learning Program · City of Middletown, CT</div>
+      <ul class="exp-bullets">
+        <li>Executed penetration testing and vulnerability assessments across 50+ networked government systems, delivering formal remediation reports.</li>
+        <li>Configured Active Directory, DNS servers, and failover clusters across 4 physical servers — achieving 99%+ uptime for mission-critical infrastructure.</li>
+        <li>Delivered IT helpdesk support to 50+ government officials with average ticket resolution under 2 hours over a 4-year tenure (500+ hours applied).</li>
+      </ul>
+    </div>
+    <div class="exp-card">
+      <div class="exp-meta">
+        <div class="exp-title">Hardware and Security Analyst</div>
+        <div class="exp-date">Jan 2020 – Apr 2020</div>
+      </div>
+      <div class="exp-org">TECHNET Computing · Higganum, CT</div>
+      <ul class="exp-bullets">
+        <li>Reduced organizational attack surface by 40% through security hardening including registry editing, JumpCloud IAM, and endpoint defense across 25+ endpoints.</li>
+        <li>Recovered mission-critical data from 12+ compromised drives using digital forensics tooling, reducing estimated downtime by 20+ hours.</li>
+      </ul>
+    </div>
+    <div class="exp-card">
+      <div class="exp-meta">
+        <div class="exp-title">B.S. Computer Science — Cybersecurity Concentration</div>
+        <div class="exp-date">2022 – May 2026</div>
+      </div>
+      <div class="exp-org">Tennessee Technological University · Cookeville, TN</div>
+      <ul class="exp-bullets">
+        <li>Coursework: Operating Systems, Computer Networking, Algorithms, Secure Systems Design, Cybersecurity Principles.</li>
+        <li>Active in CTF competitions: HackTheBox, TryHackMe, Cyber Eagles — applying offensive and defensive techniques in structured lab environments.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">Selected Work</div>
+  <div class="section-title">Projects</div>
+  <div class="projects-grid">
+
+    <a href="https://github.com/Dommc04" target="_blank" class="project-card">
+      <div class="project-header">
+        <div class="project-icon">
+          <svg fill="none" stroke="#00e5a0" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <span class="project-link-icon">↗</span>
+      </div>
+      <div class="project-name">Attack Simulation & Offensive Security</div>
+      <div class="project-desc">Controlled attack scenarios: IP spoofing, MITM, DNS tunneling, SMB credential harvesting, and Windows password cracking. Includes formal documentation of techniques and mitigations.</div>
+      <div class="project-meta">
+        <span class="project-lang"><span class="lang-dot py"></span>Python / PowerShell</span>
+      </div>
+    </a>
+
+    <a href="https://github.com/Dommc04" target="_blank" class="project-card">
+      <div class="project-header">
+        <div class="project-icon">
+          <svg fill="none" stroke="#00e5a0" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <span class="project-link-icon">↗</span>
+      </div>
+      <div class="project-name">Custom Security Tooling</div>
+      <div class="project-desc">Built Python-based keylogger, port scanner, and code vulnerability scanner for ethical hacking research and educational practice. Focus on real-world applicability.</div>
+      <div class="project-meta">
+        <span class="project-lang"><span class="lang-dot py"></span>Python</span>
+      </div>
+    </a>
+
+    <a href="https://github.com/Dommc04/Networking" target="_blank" class="project-card">
+      <div class="project-header">
+        <div class="project-icon">
+          <svg fill="none" stroke="#00e5a0" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"/></svg>
+        </div>
+        <span class="project-link-icon">↗</span>
+      </div>
+      <div class="project-name">Networking</div>
+      <div class="project-desc">Low-level C++ networking projects and implementations. Exploring socket programming, protocol design, and network security concepts at the systems level.</div>
+      <div class="project-meta">
+        <span class="project-lang"><span class="lang-dot cpp"></span>C++</span>
+      </div>
+    </a>
+
+    <a href="https://github.com/Dommc04" target="_blank" class="project-card">
+      <div class="project-header">
+        <div class="project-icon">
+          <svg fill="none" stroke="#00e5a0" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <span class="project-link-icon">↗</span>
+      </div>
+      <div class="project-name">Secure Windows Infrastructure Lab</div>
+      <div class="project-desc">Architected a Windows Server environment with Group Policy Object (GPO) permission management and failover clustering for high availability and enterprise-grade resilience.</div>
+      <div class="project-meta">
+        <span class="project-lang"><span class="lang-dot sh"></span>PowerShell</span>
+      </div>
+    </a>
+
+    <a href="https://github.com/Dommc04" target="_blank" class="project-card">
+      <div class="project-header">
+        <div class="project-icon">
+          <svg fill="none" stroke="#00e5a0" stroke-width="1.5" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+        </div>
+        <span class="project-link-icon">↗</span>
+      </div>
+      <div class="project-name">Active Directory Attack Research</div>
+      <div class="project-desc">Research into ADDS exploitation, Domain Controller attacks, and DNS manipulation to understand adversarial tactics and inform more resilient defensive architecture design.</div>
+      <div class="project-meta">
+        <span class="project-lang"><span class="lang-dot multi"></span>Multi-tool</span>
+      </div>
+    </a>
+
+    <a href="https://github.com/Dommc04/CPP" target="_blank" class="project-card">
+      <div class="project-header">
+        <div class="project-icon">
+          <svg fill="none" stroke="#00e5a0" stroke-width="1.5" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </div>
+        <span class="project-link-icon">↗</span>
+      </div>
+      <div class="project-name">C++ Projects & Labs (CSC1300)</div>
+      <div class="project-desc">All programming projects and lab exercises from CSC1300 — covering data structures, algorithms, OOP, and systems-level C++ programming concepts.</div>
+      <div class="project-meta">
+        <span class="project-lang"><span class="lang-dot cpp"></span>C++</span>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<!-- CERTS & AWARDS -->
+<section>
+  <div class="section-label">Credentials</div>
+  <div class="section-title">Certs & Awards</div>
+
+  <div style="margin-bottom:48px;">
+    <div style="font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:20px;">Certifications</div>
+    <div class="certs-grid">
+      <div class="cert-card">
+        <div class="cert-icon">MTA</div>
+        <div>
+          <div class="cert-name">MTA: Security Fundamentals</div>
+          <div class="cert-status active">Active</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">C++</div>
+        <div>
+          <div class="cert-name">C++ Programming Professional Certificate</div>
+          <div class="cert-status active">Active</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">IST</div>
+        <div>
+          <div class="cert-name">Trade Certified — Information Systems Technology</div>
+          <div class="cert-status active">Active</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">CEH</div>
+        <div>
+          <div class="cert-name">CEH (Certified Ethical Hacker)</div>
+          <div class="cert-status progress">In Progress</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">OSCP</div>
+        <div>
+          <div class="cert-name">OSCP+</div>
+          <div class="cert-status attempted">Attempted</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">GCR</div>
+        <div>
+          <div class="cert-name">Gold Career Readiness</div>
+          <div class="cert-status active">Active</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div style="font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:20px;">Awards & Recognition</div>
+    <div class="awards-row">
+      <div class="award-pill">
+        <div class="award-pill-badge">🏆</div>
+        DoD Cyber Sentinel — Top 20% of 1,200+ Participants
+      </div>
+      <div class="award-pill">
+        <div class="award-pill-badge">⚡</div>
+        SWE Engineers Award — Technical Innovation & Teamwork
+      </div>
+      <div class="award-pill">
+        <div class="award-pill-badge">✦</div>
+        NHS National Honor Society
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">Let's Connect</div>
+  <div class="contact-wrap">
+    <div>
+      <div class="contact-big">Get in<br><span>Touch.</span></div>
+      <p style="font-size:14px;color:var(--muted);font-weight:300;max-width:340px;margin-top:16px;line-height:1.8;">
+        Open to full-time roles in software engineering and cybersecurity. Graduating May 2026. Based in Rocky Top, TN — available for remote or relocation.
+      </p>
+    </div>
+    <div class="contact-info">
+      <a href="mailto:Dom.mcelro@gmail.com" class="contact-line">
+        <span class="contact-line-label">email</span>
+        Dom.mcelro@gmail.com
+      </a>
+      <a href="tel:5713582055" class="contact-line">
+        <span class="contact-line-label">phone</span>
+        (571) 358-2055
+      </a>
+      <a href="https://linkedin.com/in/dominic-mcelroy-6473a6197" target="_blank" class="contact-line">
+        <span class="contact-line-label">linkedin</span>
+        dominic-mcelroy-6473a6197
+      </a>
+      <a href="https://github.com/Dommc04" target="_blank" class="contact-line">
+        <span class="contact-line-label">github</span>
+        github.com/Dommc04
+      </a>
+      <a href="#" class="contact-line">
+        <span class="contact-line-label">location</span>
+        Rocky Top, TN
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-copy">© 2026 Dominic McElroy — Built with precision.</div>
+  <div class="footer-links">
+    <a href="https://github.com/Dommc04" target="_blank">GitHub</a>
+    <a href="https://linkedin.com/in/dominic-mcelroy-6473a6197" target="_blank">LinkedIn</a>
+    <a href="mailto:Dom.mcelro@gmail.com">Email</a>
+  </div>
+</footer>
+
+</body>
+</html>
